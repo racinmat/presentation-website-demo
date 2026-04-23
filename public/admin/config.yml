@@ -1,7 +1,7 @@
 backend:
   name: github
   repo: racinmat/presentation-website-demo
-  branch: main
+  branch: master
   # base_url points to this same site — the OAuth functions live at /auth and /callback
   base_url: https://presentation-website-demo.pages.dev
 
