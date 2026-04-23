@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title="O nás"
+  description="Kdo jsme a co děláme. Studentská organizace Lékařské fakulty Univerzity Karlovy v Praze."
+>
+  <section class="section">
+    <div class="container">
+      <div class="page-layout">
+        <header class="page-header">
+          <h1>O nás</h1>
+          <p class="lead">
+            Jsme studentská organizace Lékařské fakulty Univerzity Karlovy v Praze.
+          </p>
+        </header>
+
+        <div class="prose content">
+          <h2>Naše poslání</h2>
+          <p>
+            Naším cílem je podporovat studenty medicíny v jejich studijním i osobním životě.
+            Organizujeme přednášky, workshopy a společenské akce, které propojují studenty
+            napříč ročníky.
+          </p>
+
+          <h2>Co děláme</h2>
+          <ul>
+            <li>Organizujeme vzdělávací akce a přednášky odborníků z praxe</li>
+            <li>Vydáváme aktuality a informace relevantní pro studenty LF</li>
+            <li>Propojujeme studenty s absolventy a nemocničním prostředím</li>
+            <li>Poskytujeme podporu při studiu a navigaci ve fakultním systému</li>
+          </ul>
+
+          <h2>Kontaktujte nás</h2>
+          <p>
+            Máte zájem o spolupráci nebo chcete vědět více?
+            Navštivte naši <a href={`${base}kontakt/`}>kontaktní stránku</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-layout {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-gray-200);
+  }
+
+  .page-header h1 {
+    margin-bottom: var(--space-4);
+  }
+
+  .lead {
+    font-size: 1.25rem;
+    color: var(--color-gray-600);
+    line-height: 1.7;
+  }
+
+  .content {
+    max-width: 100%;
+  }
+</style>

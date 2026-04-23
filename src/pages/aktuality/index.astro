@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+
+const allPosts = await getCollection('aktuality');
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout
+  title="Aktuality"
+  description="Nejnovější zprávy, novinky a informace ze studentského života na Lékařské fakultě UK Praha."
+>
+  <section class="section">
+    <div class="container">
+      <div class="page-header">
+        <h1>Aktuality</h1>
+        <p>Nejnovější zprávy a informace pro studenty Lékařské fakulty UK Praha.</p>
+      </div>
+
+      {sortedPosts.length > 0 ? (
+        <div class="posts-grid">
+          {sortedPosts.map(post => (
+            <PostCard
+              title={post.data.title}
+              pubDate={post.data.pubDate}
+              description={post.data.description}
+              href={`${base}aktuality/${post.slug}/`}
+              heroImage={post.data.heroImage}
+              tags={post.data.tags}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="no-posts">
+          <p>Zatím zde nejsou žádné aktuality.</p>
+          <p>Brzy přidáme první příspěvky.</p>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: var(--space-12);
+  }
+
+  .page-header h1 {
+    margin-bottom: var(--space-3);
+  }
+
+  .page-header p {
+    font-size: 1.125rem;
+    color: var(--color-gray-600);
+    max-width: 60ch;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .no-posts {
+    text-align: center;
+    padding: var(--space-20);
+    background: var(--color-gray-100);
+    border-radius: var(--radius-lg);
+  }
+
+  .no-posts p {
+    color: var(--color-gray-400);
+    margin-bottom: var(--space-2);
+  }
+</style>

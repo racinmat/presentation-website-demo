@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Kontakt"
+  description="Kontaktujte studentskou organizaci Lékařské fakulty UK Praha."
+>
+  <section class="section">
+    <div class="container">
+      <div class="page-layout">
+        <header class="page-header">
+          <h1>Kontakt</h1>
+          <p class="lead">Rádi od vás uslyšíme.</p>
+        </header>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="contact-card__icon" aria-hidden="true">✉</div>
+            <h3>E-mail</h3>
+            <p>Pro obecné dotazy:</p>
+            <a href="mailto:info@example.cz">info@example.cz</a>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-card__icon" aria-hidden="true">📍</div>
+            <h3>Adresa</h3>
+            <p>Lékařská fakulta UK<br />Praha, Česká republika</p>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-card__icon" aria-hidden="true">🕐</div>
+            <h3>Odezva</h3>
+            <p>Obvykle odpovídáme do 2–3 pracovních dnů.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-layout {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .page-header {
+    margin-bottom: var(--space-12);
+  }
+
+  .page-header h1 {
+    margin-bottom: var(--space-3);
+  }
+
+  .lead {
+    font-size: 1.125rem;
+    color: var(--color-gray-600);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .contact-card {
+    background: var(--color-gray-100);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+  }
+
+  .contact-card__icon {
+    font-size: 1.75rem;
+    margin-bottom: var(--space-3);
+    display: block;
+  }
+
+  .contact-card h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-2);
+    color: var(--color-primary);
+  }
+
+  .contact-card p {
+    font-size: 0.9375rem;
+    color: var(--color-gray-600);
+    line-height: 1.6;
+  }
+
+  .contact-card a {
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+</style>

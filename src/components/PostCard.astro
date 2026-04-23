@@ -1,0 +1,148 @@
+---
+interface Props {
+  title: string;
+  pubDate: Date;
+  description: string;
+  href: string;
+  heroImage?: string;
+  tags?: string[];
+}
+
+const { title, pubDate, description, href, heroImage, tags } = Astro.props;
+
+const formattedDate = pubDate.toLocaleDateString('cs-CZ', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<article class="card">
+  {heroImage && (
+    <a href={href} class="card__image-link" tabindex="-1" aria-hidden="true">
+      <img src={heroImage} alt="" class="card__image" loading="lazy" />
+    </a>
+  )}
+  <div class="card__body">
+    {tags && tags.length > 0 && (
+      <div class="card__tags">
+        {tags.map(tag => <span class="card__tag">{tag}</span>)}
+      </div>
+    )}
+    <h3 class="card__title">
+      <a href={href}>{title}</a>
+    </h3>
+    <p class="card__description">{description}</p>
+    <footer class="card__footer">
+      <time datetime={pubDate.toISOString().split('T')[0]} class="card__date">
+        {formattedDate}
+      </time>
+      <a href={href} class="card__readmore">Číst dál →</a>
+    </footer>
+  </div>
+</article>
+
+<style>
+  .card {
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.2s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-2px);
+  }
+
+  .card__image-link {
+    display: block;
+    overflow: hidden;
+  }
+
+  .card__image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+
+  .card:hover .card__image {
+    transform: scale(1.03);
+  }
+
+  .card__body {
+    padding: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .card__tag {
+    background: var(--color-accent-light);
+    color: var(--color-primary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    letter-spacing: 0.03em;
+  }
+
+  .card__title {
+    font-size: 1.125rem;
+    margin-bottom: var(--space-3);
+    line-height: 1.35;
+  }
+
+  .card__title a {
+    color: var(--color-gray-900);
+    text-decoration: none;
+  }
+
+  .card__title a:hover {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .card__description {
+    font-size: 0.9375rem;
+    color: var(--color-gray-600);
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+    flex: 1;
+  }
+
+  .card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-gray-200);
+  }
+
+  .card__date {
+    font-size: 0.875rem;
+    color: var(--color-gray-400);
+  }
+
+  .card__readmore {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  .card__readmore:hover {
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,133 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  pubDate: Date;
+  description: string;
+  heroImage?: string;
+  tags?: string[];
+}
+
+const { title, pubDate, description, heroImage, tags } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+const formattedDate = pubDate.toLocaleDateString('cs-CZ', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={description} image={heroImage}>
+  <article class="post">
+    {heroImage && (
+      <div class="post__hero">
+        <img src={heroImage} alt="" class="post__hero-img" />
+      </div>
+    )}
+
+    <div class="container">
+      <div class="post__layout">
+        <header class="post__header">
+          <a href={`${base}aktuality/`} class="post__back">← Zpět na aktuality</a>
+
+          {tags && tags.length > 0 && (
+            <div class="post__tags">
+              {tags.map(tag => <span class="post__tag">{tag}</span>)}
+            </div>
+          )}
+
+          <h1>{title}</h1>
+
+          <p class="post__description">{description}</p>
+
+          <time datetime={pubDate.toISOString().split('T')[0]} class="post__date">
+            Publikováno {formattedDate}
+          </time>
+        </header>
+
+        <div class="post__content prose">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    padding-bottom: var(--space-20);
+  }
+
+  .post__hero {
+    width: 100%;
+    max-height: 480px;
+    overflow: hidden;
+    margin-bottom: var(--space-12);
+  }
+
+  .post__hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .post__layout {
+    max-width: 800px;
+    margin: 0 auto;
+    padding-top: var(--space-12);
+  }
+
+  .post__back {
+    display: inline-block;
+    color: var(--color-accent);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    margin-bottom: var(--space-6);
+  }
+
+  .post__back:hover {
+    text-decoration: underline;
+  }
+
+  .post__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .post__tag {
+    background: var(--color-accent-light);
+    color: var(--color-primary);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+  }
+
+  .post__header h1 {
+    margin-bottom: var(--space-4);
+  }
+
+  .post__description {
+    font-size: 1.125rem;
+    color: var(--color-gray-600);
+    line-height: 1.7;
+    margin-bottom: var(--space-4);
+  }
+
+  .post__date {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--color-gray-400);
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-gray-200);
+  }
+
+  .post__content {
+    margin-top: var(--space-4);
+  }
+</style>

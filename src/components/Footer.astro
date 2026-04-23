@@ -1,0 +1,141 @@
+---
+const base = import.meta.env.BASE_URL;
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <div class="footer__brand">
+      <a href={base} class="footer__logo">
+        <span class="footer__logo-lf">LF</span>
+        <span>Praha</span>
+      </a>
+      <p>Studentská organizace Lékařské fakulty<br />Univerzity Karlovy v Praze</p>
+    </div>
+
+    <nav class="footer__nav" aria-label="Patičková navigace">
+      <h3>Stránky</h3>
+      <ul role="list">
+        <li><a href={base}>Domů</a></li>
+        <li><a href={`${base}aktuality/`}>Aktuality</a></li>
+        <li><a href={`${base}o-nas/`}>O nás</a></li>
+        <li><a href={`${base}kontakt/`}>Kontakt</a></li>
+      </ul>
+    </nav>
+
+    <div class="footer__contact">
+      <h3>Kontakt</h3>
+      <p>Lékařská fakulta UK<br />Praha, Česká republika</p>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <div class="container">
+      <p>&copy; {year} LF Praha. Všechna práva vyhrazena.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-primary);
+    color: rgba(255,255,255,0.75);
+    margin-top: auto;
+  }
+
+  .footer__inner {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--space-12);
+    padding: var(--space-16) var(--space-6);
+  }
+
+  .footer__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--color-white);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: var(--space-4);
+  }
+
+  .footer__logo-lf {
+    background: var(--color-accent);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+  }
+
+  .footer__logo:hover {
+    text-decoration: none;
+  }
+
+  .footer__brand p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .footer__nav h3,
+  .footer__contact h3 {
+    color: var(--color-white);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-4);
+  }
+
+  .footer__nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .footer__nav a {
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9375rem;
+    transition: color 0.15s;
+  }
+
+  .footer__nav a:hover {
+    color: var(--color-white);
+    text-decoration: none;
+  }
+
+  .footer__contact p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+  }
+
+  .footer__bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding: var(--space-4) var(--space-6);
+  }
+
+  .footer__bottom p {
+    color: rgba(255,255,255,0.4);
+    font-size: 0.875rem;
+  }
+
+  @media (max-width: 768px) {
+    .footer__inner {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+    }
+
+    .footer__brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer__inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

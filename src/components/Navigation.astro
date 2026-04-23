@@ -1,0 +1,163 @@
+---
+const base = import.meta.env.BASE_URL;
+const currentPath = Astro.url.pathname;
+
+const links = [
+  { href: base,                  label: 'Domů' },
+  { href: `${base}aktuality/`,   label: 'Aktuality' },
+  { href: `${base}o-nas/`,       label: 'O nás' },
+  { href: `${base}kontakt/`,     label: 'Kontakt' },
+];
+
+function isActive(href: string) {
+  if (href === base) return currentPath === base || currentPath === base.slice(0, -1);
+  return currentPath.startsWith(href);
+}
+---
+
+<nav class="nav">
+  <div class="container nav__inner">
+    <a href={base} class="nav__logo">
+      <span class="nav__logo-lf">LF</span>
+      <span class="nav__logo-text">Praha</span>
+    </a>
+
+    <button class="nav__toggle" id="nav-toggle" aria-label="Otevřít menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav__links" id="nav-links" role="list">
+      {links.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class:list={['nav__link', { 'nav__link--active': isActive(link.href) }]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const links = document.getElementById('nav-links');
+  toggle?.addEventListener('click', () => {
+    const open = links?.classList.toggle('nav__links--open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+</script>
+
+<style>
+  .nav {
+    background: var(--color-primary);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+  }
+
+  .nav__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--color-white);
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  .nav__logo-lf {
+    background: var(--color-accent);
+    color: var(--color-white);
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+  }
+
+  .nav__logo:hover {
+    text-decoration: none;
+  }
+
+  .nav__links {
+    display: flex;
+    list-style: none;
+    gap: var(--space-2);
+  }
+
+  .nav__link {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .nav__link:hover {
+    color: var(--color-white);
+    background: rgba(255,255,255,0.1);
+    text-decoration: none;
+  }
+
+  .nav__link--active {
+    color: var(--color-white);
+    background: rgba(255,255,255,0.15);
+  }
+
+  .nav__toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-2);
+  }
+
+  .nav__toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--color-white);
+    border-radius: 2px;
+    transition: transform 0.2s;
+  }
+
+  @media (max-width: 640px) {
+    .nav__toggle {
+      display: flex;
+    }
+
+    .nav__links {
+      display: none;
+      position: absolute;
+      top: 4rem;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: var(--color-primary-light);
+      padding: var(--space-4);
+      gap: var(--space-1);
+    }
+
+    .nav__links--open {
+      display: flex;
+    }
+
+    .nav__link {
+      padding: var(--space-3) var(--space-4);
+    }
+  }
+</style>

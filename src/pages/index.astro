@@ -1,0 +1,189 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroSection from '../components/HeroSection.astro';
+import PostCard from '../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+
+const allPosts = await getCollection('aktuality');
+const latestPosts = allPosts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<BaseLayout
+  title="Domů"
+  description="Studentská organizace Lékařské fakulty Univerzity Karlovy v Praze. Aktuality, akce a informace pro studenty medicíny."
+>
+  <HeroSection
+    title="Studentská organizace Lékařské fakulty UK Praha"
+    subtitle="Jsme tady pro studenty medicíny. Přinášíme aktuality, organizujeme akce a propojujeme studentskou komunitu Lékařské fakulty Univerzity Karlovy v Praze."
+    ctaLabel="Aktuality"
+    ctaHref={`${base}aktuality/`}
+    secondaryLabel="O nás"
+    secondaryHref={`${base}o-nas/`}
+  />
+
+  <!-- Aktuality section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Nejnovější aktuality</h2>
+        <a href={`${base}aktuality/`} class="section-header__link">Všechny aktuality →</a>
+      </div>
+
+      {latestPosts.length > 0 ? (
+        <div class="posts-grid">
+          {latestPosts.map(post => (
+            <PostCard
+              title={post.data.title}
+              pubDate={post.data.pubDate}
+              description={post.data.description}
+              href={`${base}aktuality/${post.slug}/`}
+              heroImage={post.data.heroImage}
+              tags={post.data.tags}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="no-posts">Zatím zde nejsou žádné aktuality. Brzy přidáme první příspěvky.</p>
+      )}
+    </div>
+  </section>
+
+  <!-- About teaser -->
+  <section class="section section--tinted">
+    <div class="container">
+      <div class="about-teaser">
+        <div class="about-teaser__text">
+          <h2>Kdo jsme?</h2>
+          <p>
+            Jsme studentská organizace působící na Lékařské fakultě Univerzity Karlovy v Praze.
+            Naším cílem je zlepšit studentský život, usnadnit přístup k informacím a propojit
+            studenty napříč ročníky.
+          </p>
+          <a href={`${base}o-nas/`} class="btn btn-primary" style="margin-top: var(--space-6);">
+            Více o nás
+          </a>
+        </div>
+        <div class="about-teaser__stats">
+          <div class="stat">
+            <span class="stat__number">1. LF UK</span>
+            <span class="stat__label">Praha</span>
+          </div>
+          <div class="stat">
+            <span class="stat__number">Studenti</span>
+            <span class="stat__label">medicíny</span>
+          </div>
+          <div class="stat">
+            <span class="stat__number">Komunita</span>
+            <span class="stat__label">a podpora</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: var(--space-8);
+    gap: var(--space-4);
+  }
+
+  .section-header__link {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    white-space: nowrap;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-6);
+  }
+
+  .no-posts {
+    text-align: center;
+    color: var(--color-gray-400);
+    padding: var(--space-12);
+    background: var(--color-gray-100);
+    border-radius: var(--radius-lg);
+  }
+
+  .section--tinted {
+    background: var(--color-gray-100);
+  }
+
+  .about-teaser {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+
+  .about-teaser__text h2 {
+    margin-bottom: var(--space-4);
+  }
+
+  .about-teaser__text p {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+
+  .about-teaser__stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--space-4);
+  }
+
+  .stat {
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6) var(--space-4);
+    text-align: center;
+    box-shadow: var(--shadow-card);
+  }
+
+  .stat__number {
+    display: block;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    line-height: 1.2;
+    margin-bottom: var(--space-1);
+  }
+
+  .stat__label {
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--color-gray-400);
+  }
+
+  @media (max-width: 768px) {
+    .about-teaser {
+      grid-template-columns: 1fr;
+    }
+
+    .about-teaser__stats {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .about-teaser__stats {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
