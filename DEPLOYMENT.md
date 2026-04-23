@@ -137,11 +137,37 @@ Pokud chcete místo `pages.dev` používat vlastní doménu (např. `studenti-lf
 
 ## Ceny a limity (Free tier)
 
-| Služba | Limit | Cena |
-|--------|-------|------|
-| Cloudflare Pages buildy | 500 buildů/měsíc | Zdarma |
-| Cloudflare Pages bandwidth | Neomezená | Zdarma |
-| Cloudflare Pages Functions | 100 000 req/den | Zdarma |
-| GitHub repozitář | Neomezený (public) | Zdarma |
+### Cloudflare Pages (hosting + CI/CD)
 
-Pro prezentační web neziskovky tyto limity bohatě postačují.
+| Položka | Limit |
+|---------|-------|
+| Buildy | 500 / měsíc |
+| Souběžné buildy | 1 |
+| Vlastní domény | 100 |
+| Bandwidth | Neomezená |
+| Požadavky na statické soubory | Neomezené |
+| Projekty | Neomezené |
+
+### Cloudflare Pages Functions (OAuth proxy — `/auth` a `/callback`)
+
+| Položka | Limit |
+|---------|-------|
+| Požadavky | 100 000 / den |
+| CPU čas | 10 ms / požadavek |
+| Paměť | 128 MB |
+
+OAuth proxy zpracuje každé přihlášení editora jako 2 požadavky (jeden na `/auth`, jeden na `/callback`). Při 10 přihlášeních denně je to 20 požadavků — daleko pod limitem.
+
+### GitHub (repozitář + OAuth App)
+
+| Položka | Limit |
+|---------|-------|
+| Veřejný repozitář | Neomezený |
+| OAuth App | Zdarma |
+| GitHub API (přes Decap CMS) | 5 000 požadavků / hodinu |
+
+### Celkové náklady
+
+**0 Kč / měsíc** — pokud nepřekročíte 500 buildů měsíčně, což při příležitostném publikování aktualit nenastane.
+
+Jediný možný výdaj je vlastní doména (cca 200–300 Kč/rok), která je ale volitelná.
