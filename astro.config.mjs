@@ -1,9 +1,7 @@
 import { defineConfig } from 'astro/config';
 
-// Replace <your-project>.pages.dev with your actual Cloudflare Pages domain.
-// If you add a custom domain, update site accordingly.
+// Set site to your actual Cloudflare Pages URL or custom domain after first deploy.
 export default defineConfig({
-  site: 'https://<your-project>.pages.dev',
   trailingSlash: 'always',
   build: {
     format: 'directory',
