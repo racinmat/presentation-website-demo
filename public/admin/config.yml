@@ -1,9 +1,9 @@
 backend:
   name: github
-  repo: <org>/<repo>
+  repo: racinmat/presentation-website-demo
   branch: main
   # base_url points to this same site — the OAuth functions live at /auth and /callback
-  base_url: https://<your-project>.pages.dev
+  base_url: https://presentation-website-demo.pages.dev
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
