@@ -6,5 +6,3 @@ tags:
   - zkouškové
 ---
 Zkouška je od slova zkusit! Jak přežít zkouškové?
-
-Tohle jsme publikovali v administraci
